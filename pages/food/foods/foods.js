@@ -15,6 +15,12 @@ Page({
     tableList: [],
   },
 
+  onChange(e) {
+		this.data.queryInfo.keywords = e.detail;
+		this.data.queryInfo.pageNumber = 1;
+		this.findPage('查询中...');
+	},
+
   findPage(message) {
     wx.showNavigationBarLoading();
     wx.showToast({

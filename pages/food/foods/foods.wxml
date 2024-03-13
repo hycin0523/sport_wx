@@ -1,5 +1,5 @@
 <view>
-  <van-search value="{{ queryInfo.keywords }}" shape="round" background="#4fc08d" placeholder="请输入搜索关键词" bind:change="onChange" />
+  <van-search value="{{ queryInfo.keywords }}" shape="round" placeholder="请输入搜索关键词" bind:change="onChange" />
   <van-card 
     wx:if="{{ tableList.length > 0 }}" 
     wx:for="{{ tableList }}" wx:key="index" 
