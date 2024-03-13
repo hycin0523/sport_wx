@@ -4,7 +4,10 @@
     "pages/user/user",
     "pages/food/food",
     "pages/sport/sport",
-    "pages/index/details/details"
+    "pages/index/details/details",
+    "pages/food/foods/foods",
+    "pages/food/foods/details/details",
+    "pages/food/foods/foodDetails/foodDetails"
   ],
   "usingComponent": {
     "van-icon": "@vant/weapp/icon/index",
