@@ -3,10 +3,13 @@
     "pages/index/index",
     "pages/user/user",
     "pages/food/food",
-    "pages/sport/sport"
+    "pages/sport/sport",
+    "pages/index/details/details"
   ],
   "usingComponent": {
-    "van-icon": "/miniprogram_npm/vant-weapp/icon/index"
+    "van-icon": "@vant/weapp/icon/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-empty": "@vant/weapp/empty/index"
   },
   "window": {
     "navigationBarTextStyle": "black",
@@ -19,26 +22,23 @@
     "selectedColor": "#000000",
     "backgroundColor": "#000000",
     "list": [
-			{
-				"pagePath": "pages/index/index",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/food/food",
-				"text": "饮食推荐"
-			},
-			{
-				"pagePath": "pages/sport/sport",
-				"text": "运动统计"
-			},
-			{
-				"pagePath": "pages/user/user",
-				"text": "个人中心"
-			}
-		]
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/food/food",
+        "text": "饮食推荐"
+      },
+      {
+        "pagePath": "pages/sport/sport",
+        "text": "运动统计"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "个人中心"
+      }
+    ]
   },
-  "style": "v2",
-  "componentFramework": "glass-easel",
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "sitemapLocation": "sitemap.json"
 }
