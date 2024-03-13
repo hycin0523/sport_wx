@@ -1,1 +1,4 @@
 /* pages/food/food.wxss */
+.title {
+  font-size: 12px;
+}

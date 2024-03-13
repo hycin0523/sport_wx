@@ -5,14 +5,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    tableList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    wx.request({
+      url: 'http://localhost:8080/food/typeAll',
+      method: 'GET',
+      header: {
+        'Authorization': wx.getStorageSync('token'),
+      },
+      success: (res) => {
+        this.setData({
+          tableList: res.data.data
+        });
+      },
+      fail: (err) => {
+        console.log("接口请求失败：--->", err);
+      }
+    });
   },
 
   /**
