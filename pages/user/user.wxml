@@ -1,2 +1,7 @@
 <!--pages/user/user.wxml-->
-<view>个人中心</view>
+<view class="container">
+  <view class="userinfo">
+    <cover-image src="{{ userInfo.avatar }}" bind:tap="getInfo" class="userinfo-avatar" />
+    <van-button type="warning" size="samll" bind:tap="logout">退出登录</van-button>
+  </view>
+</view>
