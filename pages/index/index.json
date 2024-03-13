@@ -3,5 +3,7 @@
     "van-card": "@vant/weapp/card/index",
     "van-button": "@vant/weapp/button/index",
     "van-empty": "@vant/weapp/empty/index"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "运动资讯"
 }

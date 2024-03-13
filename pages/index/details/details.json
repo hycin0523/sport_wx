@@ -2,5 +2,6 @@
   "usingComponents": {
     "van-tag": "@vant/weapp/tag/index",
     "towxml": "/towxml/towxml"
-  }
+  },
+  "navigationBarTitleText": "运动资讯详情"
 }
