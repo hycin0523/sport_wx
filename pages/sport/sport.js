@@ -25,29 +25,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.request({
-      url: 'http://localhost:8080/mini/step/report',
-      method: 'GET',
-      header: {
-        'Authorization': wx.getStorageSync('token'),
-      },
-      success: (res) => {
-        const { week1, week2, week3, week4 } = res.data.data;
-        for (let i = 0; i < 7; i++) {
-          //装本周数据
-          if (week1[i] === null || week1[i] === undefined) {
-            this.data.data1.push(null);
-          } else {
-            this.data.data1.push(week1[i].step);
-          }
-          this.data.data2.push(week2[i].step);
-          this.data.data3.push(week3[i].step);
-          this.data.data4.push(week4[i].step);
-        }
-        this.lineComponent = this.selectComponent('#mychart-dom-line');
-        this.initChart();
-      }
-    })
+    app.ajax('mini/step/report', 'GET').then((res) => {
+			const { week1, week2, week3, week4 } = res.data;
+			//迭代运动信息
+			for (let i=0; i<7; i++) {
+				//装本周数据
+				if (week1[i] === null || week1[i] === undefined) {
+					this.data.data1.push(null);
+				} else {
+					this.data.data1.push(week1[i].step);
+				}
+				this.data.data2.push(week2[i].step);
+				this.data.data3.push(week3[i].step);
+				this.data.data4.push(week4[i].step);
+			}
+			this.lineComponent = this.selectComponent('#mychart-dom-line');
+			this.initChart();
+		});
   },
 
   /**

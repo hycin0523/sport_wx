@@ -76,41 +76,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.request({
-      url: 'http://localhost:8080/food/' + options.id,
-      method: 'GET',
-      header: {
-        'Authorization': wx.getStorageSync('token'),
-      },
-      success: (res) => {
-        let { data } = res.data;
-        let temp = [];
-        if (data.imageUrls) {
-          let arr = data.imageUrls.split(',');
-          if (arr.length > 0) {
-            arr.forEach(i => {
-              temp.push('http://s9nu8lrju.hb-bkt.clouddn.com/' + i);
-            });
-          } else {
-            temp.push('http://s9nu8lrju.hb-bkt.clouddn.com/' + arr[0]);
-          }
+    app.ajax(`food/${options.id}`, 'GET').then((res) => {
+      let { data } = res;
+      let temp = [];
+      if (data.imageUrls) {
+        let arr = data.imageUrls.split(',');
+        if (arr.length > 0) {
+          arr.forEach(i => {
+            temp.push('http://s9nu8lrju.hb-bkt.clouddn.com/' + i);
+          });
         } else {
-          temp.push('https://img.yzcdn.cn/vant/cat.jpeg');
+          temp.push('http://s9nu8lrju.hb-bkt.clouddn.com/' + arr[0]);
         }
-        this.setData({
-          dataInfo: data,
-          imageUrls: temp
-        });
-        echartsData = [
-          { value: data.fat, name: '脂肪' },
-          { value: data.protein, name: '蛋白质' },
-          { value: data.carbonWater, name: '碳水化合物' }
-        ];
-      },
-      fail: (err) => {
-        console.log("接口请求失败：--->", err)
+      } else {
+        temp.push('https://img.yzcdn.cn/vant/cat.jpeg');
       }
-    })
+      this.setData({
+        dataInfo: data,
+        imageUrls: temp
+      });
+      echartsData = [
+        { value: data.fat, name: '脂肪' },
+        { value: data.protein, name: '蛋白质' },
+        { value: data.carbonWater, name: '碳水化合物' }
+      ];
+    });
   },
 
   /**

@@ -1,5 +1,5 @@
 // index.js
-const app = getApp()
+const app = getApp();
 
 Page({
 
@@ -22,59 +22,48 @@ Page({
       title: message,
       icon: 'loading',
     });
-    wx.request({
-      url: 'http://localhost:8080/sport/findPage',
-      method: 'POST',
-      header: {
-        'Authorization': wx.getStorageSync('token'),
-      },
-      data: this.data.queryInfo,
-      success: (res) => {
-        // 将原有的结果列表定义为临时数组
-        let temp = this.data.tableList;
-        // 将新的结果接收
-        let result = res.data.rows;
-        if (result.length > 0) {
-          // 如果分页页码为1，那么说明用户在下拉
-          if (this.data.queryInfo.pageNumber == 1) {
-            temp = [];
-          }
-          // 如果结果长度大于分页数，那么说明还可以上拉数据，否则禁止上拉
-          if (result.length < this.data.queryInfo.pageSize) {
-            this.setData({
-              tableList: temp.concat(result),
-              hasMoreData: false
-            });
-          } else {
-            this.setData({
-              tableList: temp.concat(result),
-              hasMoreData: true,
-              queryInfo: {
-                pageNumber: this.data.queryInfo.pageNumber + 1,
-                pageSize: 5,
-              }
-            });
-          }
-        } else {
+    app.ajax("sport/findPage", "POST", this.data.queryInfo).then((res) => {
+      // 将原有的结果列表定义为临时数组
+      let temp = this.data.tableList;
+      // 将新的结果接收
+      let result = res.rows;
+      if (result.length > 0) {
+        // 如果分页页码为1，那么说明用户在下拉
+        if (this.data.queryInfo.pageNumber == 1) {
+          temp = [];
+        }
+        // 如果结果长度大于分页数，那么说明还可以上拉数据，否则禁止上拉
+        if (result.length < this.data.queryInfo.pageSize) {
           this.setData({
+            tableList: temp.concat(result),
             hasMoreData: false
           });
-          //在当前页面显示导航条加载动画
-          wx.showNavigationBarLoading();
-          //显示 loading 提示框
-          wx.showLoading({
-            title: '没有跟多数据了！',
+        } else {
+          this.setData({
+            tableList: temp.concat(result),
+            hasMoreData: true,
+            queryInfo: {
+              pageNumber: this.data.queryInfo.pageNumber + 1,
+              pageSize: 5,
+            }
           });
-          wx.hideNavigationBarLoading();
-          wx.hideLoading();
         }
-      },
-      fail: (err) => {
-        console.log("接口请求失败：--->", err)
+      } else {
+        this.setData({
+          hasMoreData: false
+        });
+        //在当前页面显示导航条加载动画
+        wx.showNavigationBarLoading();
+        //显示 loading 提示框
+        wx.showLoading({ 
+          title: '没有跟多数据了！',
+        });
+        wx.hideNavigationBarLoading();
+        wx.hideToast();
       }
     });
     wx.hideNavigationBarLoading();
-    wx.hideLoading();
+    wx.hideToast();
   },
 
   toDetails(event) {

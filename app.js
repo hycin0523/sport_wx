@@ -26,7 +26,6 @@ App({
               // 获取微信运动步数
               wx.getWeRunData({
                 success: (res) => {
-                  console.log(res)
                   // 拿 encryptedData 到开发者后台解密开放数据
                   const {
                     encryptedData,
@@ -68,5 +67,35 @@ App({
       }
     })
   },
-  towxml: require('/towxml/index')
+  towxml: require('/towxml/index'),
+  ajax: (url, method, data) => {
+    return new Promise((resolve, reject) => {
+      wx.request({
+        url: `http://localhost:8080/${url}`,
+        method: method,
+        data: data,
+        header: {
+          'Authorization': wx.getStorageSync('token')
+        },
+        success: (res) => {
+          if (res.data.flag) {
+            resolve(res.data);
+          } else {
+            wx.showToast({
+              title: res.data.message,
+              icon: 'error'
+            });
+            reject(res.data);
+          }
+        },
+        fail: (err) => {
+          wx.showToast({
+            title: '网路请求异常',
+            icon: 'error'
+          });
+          reject(err);
+        }
+      });
+    });
+  }
 })
