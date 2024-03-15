@@ -1,1 +1,13 @@
 /* pages/sport/sport.wxss */
+.title {
+  text-align: center;
+  color: black;
+  margin-bottom: 15px;
+}
+
+.step {
+  font-size: 22px;
+  color: black;
+  margin-top: 10px;
+  text-align: center;
+}

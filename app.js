@@ -23,6 +23,40 @@ App({
               wx.setStorageSync('token', `${data.tokenHead} ${data.token}`);
               wx.setStorageSync('userInfo', data.userInfo);
               wx.setStorageSync('openid', data.openid);
+              // 获取微信运动步数
+              wx.getWeRunData({
+                success: (res) => {
+                  console.log(res)
+                  // 拿 encryptedData 到开发者后台解密开放数据
+                  const {
+                    encryptedData,
+                    iv
+                  } = res;
+                  wx.request({
+                    url: 'http://localhost:8080/mini/wxrun',
+                    method: "POST",
+                    header: {
+                      'Authorization': wx.getStorageSync('token'),
+                    },
+                    data: {
+                      encryptedData: encryptedData,
+                      iv: iv,
+                      sessionKey: data.sessionKey, // 小程序登录时获取
+                      openid: data.openid
+                    },
+                    success: (res) => {
+                      wx.setStorageSync('step', res.data.data);
+                    },
+                    fail: (err) => {
+                      wx.showToast({
+                        title: '请关注“微信运动”公众号后重试',
+                        icon: 'none',
+                        duration: 3000
+                      });
+                    }
+                  })
+                }
+              });
             },
             fail: (err) => {
               console.log("接口请求失败：--->", err)
